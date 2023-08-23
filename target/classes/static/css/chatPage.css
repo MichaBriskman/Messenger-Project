@@ -1,0 +1,72 @@
+body{
+    background-image: url("paper.jpg");
+}
+.form-group {
+    width: 40rem;
+    max-width: 90%;
+    margin: auto;
+    /*background-color: papayawhip;*/
+    border-radius:10px;
+}
+
+.form-control label,
+
+.form-group input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.25rem;
+}
+
+
+.user-form {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}
+
+.input {
+    padding:10px;
+    border-radius:10px;
+}
+.btn-block {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}
+
+.alert-success {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.card__header,
+.card__content {
+    padding: 1rem;
+}
+
+
+.card__actions {
+    padding: 1rem;
+    text-align: center;
+}
+
+.card__actions button,
+.card__actions a {
+    margin: 0 0.50rem;
+}
+
+.thick-line {
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-color: #000;
+}
+
+.collapse {
+    max-height: 250px;
+    overflow: auto;
+}

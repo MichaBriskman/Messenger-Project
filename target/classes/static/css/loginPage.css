@@ -1,0 +1,47 @@
+body{
+    background-image: url("paper.jpg");
+}
+.form-group {
+    width: 40rem;
+    max-width: 90%;
+    margin: auto;
+    /*background-color: papayawhip;*/
+    border-radius:10px;
+}
+
+.form-control label,
+
+.form-group input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.25rem;
+}
+
+
+.user-form {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}
+
+.input {
+    padding:10px;
+    border-radius:10px;
+}
+.btn-block {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}
+
+.alert-success {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}
+
+.alert-danger {
+    width: 40rem;
+    max-width: 100%;
+    margin: auto;
+}

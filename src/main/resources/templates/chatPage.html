@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/chatPage.css}">-->
+    <style>
+        .form-control label,
+
+        .form-group input {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.25rem;
+        }
+
+        .card {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+        }
+
+        .card__actions button,
+        .card__actions a {
+            margin: 0 0.50rem;
+        }
+
+        .thick-line {
+            border-top-width: 2px;
+            border-bottom-width: 2px;
+            border-color: #000;
+        }
+
+        .collapse {
+            max-height: 250px;
+            overflow: auto;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body style="background-color: #8befa1;">
+<div class="text-center">
+    <h2><u>Welcome, <span th:text="${author.userName}"></span>!</u></h2>
+    <a href="/chatRoom"><button class="btn btn-primary">Chat Room</button></a>
+    <a href="/logout"><button class="btn btn-danger">Logout</button></a>
+</div>
+<br><br>
+<div class="text-center">
+    <h3>Send a Message to: </h3>
+    <h4 th:text="${receiver.userName}"></h4>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="text-center"><h3 class="card-title">Conversation</h3></div>
+                <div class="collapse show">
+                    <ul id="conversation">
+                            <li th:each="messages : ${conversation}">
+                                <p><b><span th:text="${messages.author.userName}"></span>:</b> <span th:text="${messages.message}"></span></p>
+                            </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item thick-line">
+                        <form id="sendMessageForm">
+                            <input type="hidden" th:field="*{author}" th:value="${author}" name="author" id="author"/>
+                            <input type="hidden" th:field="*{receiver}" th:value="${receiver}" name="receiver" id="receiver"/>
+                            <textarea class="form-control" id="message" name="message" th:field="*{message}" required></textarea>
+                            <span th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="text-danger"></span>
+                            <br>
+                            <button type="submit" class="btn btn-primary" id="send">Send</button>
+                        </form>
+                        <div th:if="${errorMessage}" class="alert alert-danger">
+                            <b><p th:text="${errorMessage}"></p></b>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let sendMessageForm = document.getElementById('sendMessageForm');
+        sendMessageForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const receiver = document.querySelector('h4').textContent;
+            let formData = new FormData(sendMessageForm);
+            let data={
+                message : document.getElementById("message").value,
+            }
+            fetch(`/send/${receiver}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+
+            })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json(); // Parse the response body as JSON
+                    } else {
+                        window.location.href = '/error';
+                    }
+                })
+                .then(function(message) {
+                    let conversation = document.getElementById('conversation');
+                    let newMessage = document.createElement('li');
+                    newMessage.innerHTML = '<p><b>' + message.author.userName + '</b>: ' + message.message + '</p>';
+                    conversation.appendChild(newMessage);
+                    document.getElementById("message").value = "";
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                    //window.location.href = '/error';
+                });
+        });
+        function pollMessages() {
+            const receiver = document.querySelector('h5').textContent;
+            let data = { receiver: receiver };
+            fetch('/retrieveMessages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error polling for new messages');
+                    }
+                })
+                .then(function(messages) {
+                    let conversation = document.getElementById('conversation');
+                    conversation.innerHTML = '';
+                    messages.forEach(function(message) {
+                        let newMessage = document.createElement('li');
+                        newMessage.innerHTML = '<p><b>' + 'michabri' + '</b>: ' + message + '</p>';
+                        conversation.appendChild(newMessage);
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                    //window.location.href = '/error';
+                });
+        }
+        function reloadPage() {
+            location.reload();
+        }
+        //setInterval(reloadPage, 7000);
+    });
+</script>
+</body>
+</html>
