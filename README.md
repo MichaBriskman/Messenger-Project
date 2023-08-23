@@ -1,6 +1,6 @@
 ## Authors
-* Name: Micha Briskman  Email: michabri@edu.hac.ac.il Id: 208674713
-* Name: Shlomo Gulayev Email: shlomogu@edu.hac.ac.il Id: 318757382
+* Name: Micha Briskman  Email: michabri@edu.hac.ac.il Id: 
+* Name: Shlomo Gulayev Email: shlomogu@edu.hac.ac.il Id: 
 
 ## Description
 Our program aims to build a program like Messenger, where logged users can chat with other registered users.<br>
