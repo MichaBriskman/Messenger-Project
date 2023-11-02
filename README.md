@@ -4,13 +4,22 @@
 
 ## Description
 Our program aims to build a program like Messenger, where logged users can chat with other registered users.<br>
-First the user needs to sign up to the program. Then, he needs to login to the program with the password and username
+First the user needs to sign up to the program.</br>
+![](imgs/signUpPage.png)
+</br></br></br>
+Then, he needs to login to the program with the password and username
 he registered.<br>
+![](imgs/loginPage.png)
 Then, the user is redirected to a page called "chatRooms" where a table of all the registered users are displayed to him. <br>
-The user can choose which other user he wants to chat with, and then is redirected to the chatPage with that user.
+The user can choose which other user he wants to chat with.</br>
+![](imgs/chatRoomPage.png)
+</br></br></br>
+Then is redirected to the chatPage with that user.
+![](imgs/chatTwoBrowsers.png)
 We added an admin role. Only the Admin user can remove other registered users. <br>
 (The admin sees that possibility in chatRoom page). <br>
 Removing the user also removes the messages the user wrote and received. <br>
+![](imgs/Admin.png)
 The program has 3 controllers, one for the registered users, the second is for sending the messages and the third one
 for rest api for the users. <br>
 The program has 2 repositories: userRepository and messageRepository.
